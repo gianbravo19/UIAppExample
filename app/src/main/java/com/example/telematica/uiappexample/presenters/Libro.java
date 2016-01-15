@@ -1,4 +1,4 @@
-package com.example.telematica.uiappexample.models;
+package com.example.telematica.uiappexample.presenters;
 
 /**
  * Created by franciscocabezas on 12/11/15.

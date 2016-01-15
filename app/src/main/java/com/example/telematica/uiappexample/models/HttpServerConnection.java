@@ -1,4 +1,4 @@
-package com.example.telematica.uiappexample.connection;
+package com.example.telematica.uiappexample.models;
 
 import java.io.BufferedReader;
 import java.io.IOException;

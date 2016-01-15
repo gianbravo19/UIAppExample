@@ -1,13 +1,9 @@
-package com.example.telematica.uiappexample;
+package com.example.telematica.uiappexample.presenters;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-import com.example.telematica.uiappexample.connection.HttpServerConnection;
-import com.example.telematica.uiappexample.models.Libro;
+import com.example.telematica.uiappexample.models.HttpServerConnection;
+import com.example.telematica.uiappexample.views.LibroVIew;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,26 +12,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by italiano Leo on 15-01-2016.
+ */
+public class LibroPresenter implements com.example.telematica.uiappexample.presenters.contract.LibroPresenter{
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+   private LibroVIew mLibroView;
+
+    public LibroPresenter ( LibroVIew mLibroView){
+
+          this.mLibroView = mLibroView;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+    public void obtenerLibros() {
 
         AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
 
@@ -54,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 if(result != null){
                     System.out.println(result);
+                    mLibroView.manageLibro(getLista(result));
 
-                    // specify an adapter (see also next example)
-                    mAdapter = new UIAdapter(getLista(result));
-                    mRecyclerView.setAdapter(mAdapter);
+
+
                 }
             }
         };
@@ -89,4 +79,5 @@ public class MainActivity extends AppCompatActivity {
             return listaLibros;
         }
     }
+
 }
